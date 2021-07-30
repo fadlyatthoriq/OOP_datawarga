@@ -34,7 +34,7 @@
                         <label for="no_hp" class="form-label">Nomor Handphone</label>
                         <input type="number" class="form-control" id="no_hp" name="no_hp">
                     </div>
-                    <button type="submit" name="daftar" id="daftar" class="btn btn-success">Submit</button>
+                    <button type="submit" name="daftar" id="daftar" value="daftar" class="btn btn-success">Submit</button>
                 </form>
             </div>
             <div class="col-1"></div>

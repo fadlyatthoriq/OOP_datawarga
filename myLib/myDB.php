@@ -27,13 +27,13 @@ class MyDB {
         return $data->rowCount();
     }
     public function get_by_id($id){
-        $query=$this->db->prepare("SELECT * FROM warga where id=?");
+        $query=$this->db->prepare("SELECT * FROM warga WHERE id=?");
         $query->bindParam(1, $id);
         $query->execute();
         return $query->fetch();
     }
     public function delete($id){
-        $query=$this->db->prepare("DELETE FROM warga where id=?");
+        $query = $this->db->prepare("DELETE FROM warga WHERE id=?");
         $query->bindParam(1, $id);
         $query->execute();
         return $query->rowCount();

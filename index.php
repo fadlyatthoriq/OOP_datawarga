@@ -12,8 +12,6 @@
     <?php
     include ('myLib/myDB.php');
     ?>
-  </head>
-  <body>
     <?php
         $Db = new myDb();
         $warga = $Db->show();
@@ -30,7 +28,7 @@
                 $pesansimpan = "Data Gagal Tersimpan ke Database";
             }
         }
-        if (isset($_POST['hapus'])){
+        if (isset($_GET['hapus'])){
             $id = $_GET['hapus'];
             $queryhapus = $Db->delete($id);
             if($queryhapus==TRUE){
@@ -40,6 +38,8 @@
             }
         }
     ?>
+  </head>
+  <body>
 
     <div class="container">
         <div class="col-12">
@@ -47,14 +47,12 @@
                 <h2>Data Warga</h2>
                 <a href="tambahdata.php" class="btn btn-success">Tambah Data Warga</a>
             </div>
-            <?php 
-                if (isset($_POST['daftar'])){  ?>
-                    <div class="alert alert-success"><?php echo $pesansimpan; ?></div>
-                    <?php } ?>
-            <?php 
-                if (isset($_GET['hapus'])){  ?>
-                    <div class="alert alert-success"><?php echo $pesanhapus; ?></div>
-                    <?php } ?>
+            <?php if (isset($_POST['daftar'])){  ?>
+                <div class="alert alert-success"><?php echo $pesansimpan; ?></div>
+            <?php } ?>
+            <?php if (isset($_GET['hapus'])){  ?>
+                <div class="alert alert-danger"><?php echo $pesanhapus; ?></div>
+            <?php } ?>
             <table class="table table-bordered">
             <tr>
                 <td>No</td>
@@ -67,16 +65,16 @@
             
             <?php 
             $i=0;
-            foreach($warga as $data){
+            foreach($warga as $q){
             $i++;
             ?>
                 <tr>
                     <td><?php echo $i;?></td>
-                    <td><?php echo $data['no_ktp'];?></td>
-                    <td><?php echo $data['nama_lengkap'];?></td>
-                    <td><?php echo $data['alamat_lengkap'];?></td>
-                    <td><?php echo $data['no_hp'];?></td>
-                    <td><a class="badge rounded-pill bg-primary" href="detail-warga.php?id=<?php echo $data['id'];?>">Detail</a> <a class="badge rounded-pill bg-danger" href="index.php?hapus=<?php echo $data['id'];?>">Hapus</a></td>
+                    <td><?php echo $q['no_ktp'];?></td>
+                    <td><?php echo $q['nama_lengkap'];?></td>
+                    <td><?php echo $q['alamat_lengkap'];?></td>
+                    <td><?php echo $q['no_hp'];?></td>
+                    <td><a class="badge rounded-pill bg-primary" href="detail-warga.php?id=<?php echo $q['id'];?>">Detail</a> <a class="badge rounded-pill bg-danger" href="index.php?hapus=<?php echo $q['id'];?>">Hapus</a></td>
                 </tr>
             <?php } ?>
             </table>
