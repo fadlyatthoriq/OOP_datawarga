@@ -9,6 +9,31 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Form Registrasi Warga</title>
+    <?php include ("myLib/myDB.php"); ?>
+    <?php
+    $Db = new MyDb();
+    if (isset($_POST['daftar'])){
+        $noktp = $_POST['no_ktp'];
+        $nama = $_POST['nama_lengkap'];
+        $alamat = $_POST['alamat_lengkap'];
+        $nomor = $_POST['no_hp'];
+        $querysimpan = $Db->add_data($noktp, $nama, $alamat, $nomor);
+
+        if($querysimpan == TRUE){
+            echo "<script>
+                    alert('Berhasil tersimpan');
+                    document.location.href = 'index.php';
+                </script>";
+        } else {
+            echo "<script>
+                    alert('Gagal tersimpan');
+                    document.location.href = 'index.php';
+                </script>";
+        }
+    }
+
+
+    ?>
   </head>
   <body>
     <div class="container">
@@ -17,7 +42,7 @@
             <div class="col-10">
                 <h2>Form Registrasi Warga</h2>
                 <hr>
-                <form action="index.php" method="post">
+                <form method="post">
                     <div class="mb-3">
                         <label for="no_ktp" class="form-label">Nomor KTP</label>
                         <input type="number" class="form-control" id="no_ktp" name="no_ktp">

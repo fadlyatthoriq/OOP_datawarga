@@ -9,50 +9,48 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>Hello, world!</title>
+    <script type = "text/JavaScript">
+         <!--
+            function AutoRefresh() {
+               setTimeout("location.reload(true);", 1000);
+            }
+         //-->
+    </script>
     <?php
     include ('myLib/myDB.php');
     ?>
     <?php
         $Db = new myDb();
         $warga = $Db->show();
-        if (isset($_POST['daftar'])){
-            $noktp = $_POST['no_ktp'];
-            $nama = $_POST['nama_lengkap'];
-            $alamat = $_POST['alamat_lengkap'];
-            $nomor = $_POST['no_hp'];
-            $querysimpan = $Db->add_data($noktp, $nama, $alamat, $nomor);
-
-            if($querysimpan==TRUE){
-                $pesansimpan = "Data Tersimpan ke Database";
-            }else{
-                $pesansimpan = "Data Gagal Tersimpan ke Database";
-            }
-        }
         if (isset($_GET['hapus'])){
             $id = $_GET['hapus'];
             $queryhapus = $Db->delete($id);
-            if($queryhapus==TRUE){
-                $pesanhapus = "Data Berhasil Di Hapus";
-            }else{
+            if($queryhapus == TRUE){
+                $pesanhapus = "Data Terhapus";
+                echo "<script>
+                        document.location.href = 'index.php';
+                    </script>";
+            } else {
                 $pesanhapus = "Data Gagal Terhapus";
+                echo "<script>
+                        document.location.href = 'index.php';
+                    </script>";
             }
         }
-    ?>
+    ?> 
   </head>
   <body>
+ 
 
     <div class="container">
         <div class="col-12">
             <div class="py-3">
                 <h2>Data Warga</h2>
                 <a href="tambahdata.php" class="btn btn-success">Tambah Data Warga</a>
+                <?php if(isset($_POST['hapus'])){ ?>
+                    <div class="alert alert-danger"><?php echo $pesanhapus; ?></div>
+                <?php } ?>
             </div>
-            <?php if (isset($_POST['daftar'])){  ?>
-                <div class="alert alert-success"><?php echo $pesansimpan; ?></div>
-            <?php } ?>
-            <?php if (isset($_GET['hapus'])){  ?>
-                <div class="alert alert-danger"><?php echo $pesanhapus; ?></div>
-            <?php } ?>
             <table class="table table-bordered">
             <tr>
                 <td>No</td>
@@ -74,7 +72,8 @@
                     <td><?php echo $q['nama_lengkap'];?></td>
                     <td><?php echo $q['alamat_lengkap'];?></td>
                     <td><?php echo $q['no_hp'];?></td>
-                    <td><a class="badge rounded-pill bg-primary" href="detail-warga.php?id=<?php echo $q['id'];?>">Detail</a> <a class="badge rounded-pill bg-danger" href="index.php?hapus=<?php echo $q['id'];?>">Hapus</a></td>
+                    <td><a class="badge rounded-pill bg-primary" href="detail-warga.php?id=<?php echo $q['id'];?>">Detail</a> 
+                    <a class="badge rounded-pill bg-danger" href="index.php?hapus=<?php echo $q['id'];?>">Hapus</a></td>
                 </tr>
             <?php } ?>
             </table>
